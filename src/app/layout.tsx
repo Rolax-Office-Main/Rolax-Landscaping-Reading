@@ -143,6 +143,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { ReactNode } from "react";
 
 // 1. CSS IMPORTS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -158,14 +159,17 @@ import ScrollToTopButton from "@/components/ScrollToTopButton";
 import Header from "@/common/header/Header"; 
 import Footer from "@/common/footer/Footer";
 
+// ✅ PERFORMANCE: Optimize fonts with display swap strategy
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap", // Prevent font loading from blocking page render
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://rolaxlandscapingcanada.com";
@@ -251,14 +255,23 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
+        
+        {/* ✅ PERFORMANCE: DNS prefetch and preconnect for external resources */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* ✅ PERFORMANCE: Prefetch critical pages for instant navigation */}
+        <link rel="prefetch" href="/contact/" as="document" />
+        <link rel="prefetch" href="/services/" as="document" />
 
         {gaMeasurementId ? (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
-            <Script id="ga4-init" strategy="afterInteractive">
+            <Script id="ga4-init" strategy="lazyOnload">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
@@ -296,12 +309,11 @@ export default function RootLayout({
                 longitude: -79.2374,
               },
               areaServed: [
-                "Reading, PA",
-                "Wyomissing, PA",
-                "West Reading, PA",
-                "Shillington, PA",
-                "Sinking Spring, PA",
-                "Muhlenberg, PA"
+                "Reading, PA", "Wyomissing, PA", "West Reading, PA", "Shillington, PA", "Sinking Spring, PA",
+                "Mohnton, PA", "Leesport, PA", "Temple, PA", "Laureldale, PA", "Ontelaunee, PA",
+                "Blandon, PA", "Reiffton, PA", "Mt. Penn, PA", "Morisville, PA", "Flying Hills, PA",
+                "Alleghenyville, PA", "Pricetown, PA", "Fleetwood, PA", "Lorne, PA",
+                "Birdsboro, PA", "Exeter, PA", "Cumru, PA", "Muhlenberg, PA", "Amity, PA", "Tulpehocken, PA"
               ],
               openingHoursSpecification: [ // Added hours (Google loves this)
                 {

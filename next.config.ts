@@ -94,14 +94,17 @@ const nextConfig: NextConfig = {
   output: "export", // Tells Next.js to generate HTML files
   trailingSlash: true,
 
-  // --- REQUIRED FOR STATIC EXPORT ---
-  // Standard Next.js Image Optimization requires a server.
-  // We must disable it or use a custom loader for static exports.
+  // --- OPTIMIZED IMAGE HANDLING ---
+  // For static export to Cloudflare, keep unoptimized: true
+  // But format optimization improves browser rendering
   images: {
-    unoptimized: true, 
+    unoptimized: true,
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year cache for immutable images
   },
 
-  // --- COMPATIBLE SETTINGS ---
   compress: true,
   staticPageGenerationTimeout: 120,
 

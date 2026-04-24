@@ -967,47 +967,155 @@ const HeaderBottomOne = () => {
           gap: 6px;
         }
 
+        .menu-link-content svg {
+          transition: transform 0.3s ease;
+        }
+
+        .main-menu nav > ul > li:hover > a .menu-link-content svg {
+          transform: rotate(180deg);
+        }
+
         /* ================= SUB MENU (Desktop) ================= */
         .submenu {
           position: absolute;
-          top: 100%;
+          top: calc(100% + 12px);
           left: 0;
-          min-width: 250px;
-          background: #ffffff;
-          padding: 12px 0;
-          border-top: 3px solid #16a34a;
-          border-radius: 0 0 12px 12px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+          min-width: 460px;
+          background: linear-gradient(160deg, #ffffff 0%, #f6fcf8 100%);
+          padding: 14px;
+          border: 1px solid rgba(22, 163, 74, 0.16);
+          border-radius: 18px;
+          box-shadow:
+            0 12px 28px rgba(15, 23, 42, 0.10),
+            0 26px 52px rgba(15, 23, 42, 0.14);
+          backdrop-filter: blur(3px);
           opacity: 0;
           visibility: hidden;
-          transition: all 0.25s ease;
+          transform: translateY(8px);
+          transition: all 0.24s ease;
           z-index: 99999;
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 9px;
+          overflow: hidden;
+        }
+
+        .submenu::before {
+          content: "";
+          position: absolute;
+          top: -8px;
+          left: 34px;
+          width: 14px;
+          height: 14px;
+          background: #ffffff;
+          border-top: 1px solid rgba(22, 163, 74, 0.2);
+          border-left: 1px solid rgba(22, 163, 74, 0.2);
+          transform: rotate(45deg);
+        }
+
+        .submenu::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, #16a34a 0%, #22c55e 40%, #16a34a 100%);
         }
 
         .main-menu nav > ul > li:hover .submenu {
           opacity: 1;
           visibility: visible;
+          transform: translateY(0);
         }
 
         .submenu li {
           list-style: none;
+          margin-bottom: 0;
+          opacity: 0;
+          transform: translateY(5px);
+          transition: all 0.22s ease;
+        }
+
+        .main-menu nav > ul > li:hover .submenu li {
+          opacity: 1;
+          transform: translateY(0);
         }
 
         .submenu li a {
           display: block;
-          padding: 12px 25px;
+          position: relative;
+          padding: 14px 34px 14px 34px;
           font-size: 15px;
-          font-weight: 600;
-          color: #374151;
+          font-weight: 700;
+          color: #0f172a;
           text-decoration: none;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-          transition: all 0.25s ease;
+          border-radius: 12px;
+          border: 1px solid rgba(15, 23, 42, 0.05);
+          background: rgba(255, 255, 255, 0.8);
+          transition: all 0.22s ease;
+          line-height: 1.3;
+        }
+
+        .submenu li a::before {
+          content: "";
+          position: absolute;
+          left: 14px;
+          top: 50%;
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #86efac;
+          box-shadow: 0 0 0 4px rgba(134, 239, 172, 0.2);
+          transform: translateY(-50%);
+          transition: all 0.22s ease;
+        }
+
+        .submenu li a::after {
+          content: ">";
+          position: absolute;
+          right: 13px;
+          top: 50%;
+          color: #16a34a;
+          font-size: 14px;
+          font-weight: 800;
+          opacity: 0;
+          transform: translate(-3px, -50%);
+          transition: all 0.22s ease;
         }
 
         .submenu li a:hover {
-          background: #f9fafb;
+          background: #f2fbf6;
           color: #16a34a !important;
-          padding-left: 30px;
+          border-color: rgba(22, 163, 74, 0.24);
+          transform: translateX(3px);
+          box-shadow: 0 8px 16px rgba(22, 163, 74, 0.11);
+        }
+
+        .submenu li a:hover::before {
+          background: #16a34a;
+          box-shadow: 0 0 0 5px rgba(22, 163, 74, 0.2);
+        }
+
+        .submenu li a:hover::after {
+          opacity: 1;
+          transform: translate(0, -50%);
+        }
+
+        .main-menu nav > ul > li:hover .submenu li:nth-child(1) { transition-delay: 0.01s; }
+        .main-menu nav > ul > li:hover .submenu li:nth-child(2) { transition-delay: 0.03s; }
+        .main-menu nav > ul > li:hover .submenu li:nth-child(3) { transition-delay: 0.05s; }
+        .main-menu nav > ul > li:hover .submenu li:nth-child(4) { transition-delay: 0.07s; }
+        .main-menu nav > ul > li:hover .submenu li:nth-child(5) { transition-delay: 0.09s; }
+        .main-menu nav > ul > li:hover .submenu li:nth-child(6) { transition-delay: 0.11s; }
+        .main-menu nav > ul > li:hover .submenu li:nth-child(7) { transition-delay: 0.13s; }
+        .main-menu nav > ul > li:hover .submenu li:nth-child(8) { transition-delay: 0.15s; }
+
+        @media (max-width: 1200px) {
+          .submenu {
+            min-width: 360px;
+            grid-template-columns: 1fr;
+          }
         }
 
         /* ================= SOCIAL ================= */
@@ -1140,7 +1248,7 @@ const HeaderBottomOne = () => {
                     </ul>
                   </li>
 
-                  <li><Link href="/projects" style={getActiveStyle(checkActive("/projects"))}>LOCATIONS</Link></li>
+                  <li><Link href="/locations" style={getActiveStyle(checkActive("/locations"))}>LOCATIONS</Link></li>
                   <li><Link href="/about" style={getActiveStyle(checkActive("/about"))}>ABOUT US</Link></li>
                   <li><Link href="/contact" style={getActiveStyle(checkActive("/contact"))}>QUOTE</Link></li>
                   <li><Link href="/blogs" style={getActiveStyle(checkActive("/blogs"))}>BLOG</Link></li>
@@ -1213,7 +1321,7 @@ const HeaderBottomOne = () => {
               </ul>
             </li>
 
-            <li><Link href="/projects" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>LOCATIONS</Link></li>
+            <li><Link href="/locations" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>LOCATIONS</Link></li>
             <li><Link href="/about" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>ABOUT US</Link></li>
             <li><Link href="/contact" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>QUOTE</Link></li>
             <li><Link href="/blogs" onClick={() => setMobileMenuOpen(false)} style={mobileLinkStyle}>BLOG</Link></li>

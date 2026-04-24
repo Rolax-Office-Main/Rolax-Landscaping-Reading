@@ -47,7 +47,13 @@ const TreeRemoval = () => {
     "@type": "LocalBusiness",
     name: BRAND_NAME,
     telephone: PHONE_DISPLAY,
-    areaServed: ["Reading, PA", "Wyomissing, PA", "West Reading, PA", "Shillington, PA", "Sinking Spring, PA", "Muhlenberg, PA"],
+    areaServed: [
+      "Reading, PA", "Wyomissing, PA", "West Reading, PA", "Shillington, PA", "Sinking Spring, PA",
+      "Mohnton, PA", "Leesport, PA", "Temple, PA", "Laureldale, PA", "Ontelaunee, PA",
+      "Blandon, PA", "Reiffton, PA", "Mt. Penn, PA", "Morisville, PA", "Flying Hills, PA",
+      "Alleghenyville, PA", "Pricetown, PA", "Fleetwood, PA", "Lorne, PA",
+      "Birdsboro, PA", "Exeter, PA", "Cumru, PA", "Muhlenberg, PA", "Amity, PA", "Tulpehocken, PA"
+    ],
     url: "https://rolaxlandscapingcanada.com",
     serviceType: ["Tree Removal", "Tree Trimming", "Stump Grinding"],
   };

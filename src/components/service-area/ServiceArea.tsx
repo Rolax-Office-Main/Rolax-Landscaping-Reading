@@ -266,18 +266,34 @@ import React, { useState } from "react";
 import { FaArrowLeft, FaCheckCircle } from "react-icons/fa";
 
 const areas = [
+  // Primary Service Area
   "Reading",
   "Wyomissing",
   "West Reading",
   "Shillington",
   "Sinking Spring",
-  "Laureldale",
-  "Muhlenberg",
+  // Surrounding Communities
+  "Mohnton",
+  "Leesport",
   "Temple",
-  "Fleetwood",
+  "Laureldale",
+  "Ontelaunee",
   "Blandon",
+  "Reiffton",
+  "Mt. Penn",
+  "Morisville",
+  "Flying Hills",
+  "Alleghenyville",
+  "Pricetown",
+  "Fleetwood",
+  "Lorne",
+  // Additional Nearby Larger Towns
   "Birdsboro",
-  "Mohnton"
+  "Exeter",
+  "Cumru",
+  "Muhlenberg",
+  "Amity",
+  "Tulpehocken",
 ];
 
 const ServiceArea = () => {

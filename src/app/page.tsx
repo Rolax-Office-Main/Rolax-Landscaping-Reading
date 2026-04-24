@@ -104,7 +104,13 @@ export default function Home() {
       "latitude": 43.7845,
       "longitude": -79.2374
     },
-    "areaServed": ["Reading", "Wyomissing", "West Reading", "Shillington", "Sinking Spring", "Muhlenberg"],
+    "areaServed": [
+      "Reading, PA", "Wyomissing, PA", "West Reading, PA", "Shillington, PA", "Sinking Spring, PA",
+      "Mohnton, PA", "Leesport, PA", "Temple, PA", "Laureldale, PA", "Ontelaunee, PA",
+      "Blandon, PA", "Reiffton, PA", "Mt. Penn, PA", "Morisville, PA", "Flying Hills, PA",
+      "Alleghenyville, PA", "Pricetown, PA", "Fleetwood, PA", "Lorne, PA",
+      "Birdsboro, PA", "Exeter, PA", "Cumru, PA", "Muhlenberg, PA", "Amity, PA", "Tulpehocken, PA"
+    ],
     "priceRange": "$$",
     "aggregateRating": {
       "@type": "AggregateRating",
