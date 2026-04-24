@@ -317,22 +317,41 @@ const ServiceData: ServiceDataType[] = [
   },
 ];
 
-const ServiceItem = ({ img, heading, description, serviceLink, primary }: Omit<ServiceDataType, "id">) => {
+const ServiceItem = ({ img, heading, description, serviceLink, primary, num }: Omit<ServiceDataType, "id"> & { num: string }) => {
   return (
-    <div className="col-xl-3 col-lg-4 col-md-6 mb-30" role="listitem">
-      <div className="single-service h-100">
-        {primary ? <span className="service-badge">Primary Service</span> : null}
-        <div className="service-media">
-          <Image src={img} alt={`${heading} service photo`} width={480} height={300} className="service-media-img" />
+    <div className="svc-card" role="listitem">
+      <div className="svc-inner">
+        <Image src={img} alt={`${heading} service`} fill sizes="(max-width:768px) 100vw, 50vw" className="svc-img" />
+        <div className="svc-gradient" />
+        <span className="svc-num">{num}</span>
+        {primary && <span className="svc-badge">&#9733; Signature</span>}
+        <div className="svc-content">
+          <h3 className="svc-title">{heading}</h3>
+          <p className="svc-desc">{description}</p>
+          <Link
+            href={serviceLink}
+            aria-label={`Read more about ${heading}`}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              background: "rgba(255,255,255,0.15)",
+              backdropFilter: "blur(8px)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              color: "#ffffff",
+              fontWeight: 800,
+              fontSize: "13px",
+              textDecoration: "none",
+              padding: "10px 18px",
+              borderRadius: "10px",
+              letterSpacing: "0.03em",
+              transition: "background 0.25s ease, border-color 0.25s ease",
+            }}
+            className="svc-link"
+          >
+            Explore <FaLongArrowAltRight />
+          </Link>
         </div>
-        <span className="service-kicker">Rolax Signature</span>
-        <h3>{heading}</h3>
-        <p>{description}</p>
-        
-        {/* ✅ Technical SEO / Accessibility: Added aria-label. "Read More" alone is bad for screen readers; they need to know what they are reading more about! */}
-        <Link href={serviceLink} className="read-more" aria-label={`Read more about ${heading} services`}>
-          Explore {heading} <FaLongArrowAltRight />
-        </Link>
       </div>
     </div>
   );
@@ -358,54 +377,151 @@ const Service = () => {
   return (
     <>
       <style jsx>{`
-        .service-area { background:
-          radial-gradient(circle at 15% 15%, rgba(22,163,74,0.08), transparent 38%),
-          radial-gradient(circle at 90% 0%, rgba(255,107,53,0.08), transparent 28%),
-          #fdfcf0;
+        /* ── Section wrapper ─────────────────── */
+        .service-area {
+          background: #0d1a12;
           padding: 110px 0;
+          position: relative;
         }
-        .section-title { margin-bottom: 70px; text-align: center; }
-        .section-title span { color: #16a34a; font-weight: 700; display: block; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
-        .section-title h2 { font-size: 40px; font-weight: 900; color: #111827; margin-bottom: 20px; letter-spacing: -0.03em; }
-        .section-title p { max-width: 980px; margin: 0 auto; color: #4b5563; line-height: 1.85; font-size: 16px; }
-        .single-service { position: relative; overflow: hidden; background: linear-gradient(165deg, #ffffff, #f9fffb); padding: 22px; border-radius: 20px; transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; display: flex; flex-direction: column; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08); border: 1px solid rgba(22, 163, 74, 0.12); height: 100%; }
-        .single-service::after { content: ""; position: absolute; inset: 0; background: linear-gradient(130deg, rgba(22,163,74,0.06), transparent 45%); opacity: 0; transition: opacity 0.35s ease; pointer-events: none; }
-        .single-service:hover { transform: translateY(-10px); box-shadow: 0 26px 44px rgba(15, 23, 42, 0.14); border-color: rgba(22,163,74,0.32); }
-        .single-service:hover::after { opacity: 1; }
-        .service-badge { position: absolute; top: 14px; right: 14px; z-index: 3; margin-bottom: 0; padding: 7px 12px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #065f46; background: #d1fae5; border: 1px solid rgba(5, 150, 105, 0.25); }
-        .service-media { margin: -22px -22px 18px; border-radius: 20px 20px 0 0; height: 190px; background: #eaf4ee; overflow: hidden; border-bottom: 1px solid rgba(22,163,74,0.15); }
-        .service-media-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.45s ease; }
-        .single-service:hover .service-media-img { transform: scale(1.05); }
-        .service-kicker { color: #047857; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
-        .single-service h3 { font-size: 22px; font-weight: 800; margin-bottom: 12px; color: #111827; letter-spacing: -0.02em; }
-        .single-service p { margin-bottom: 24px; color: #4b5563; flex-grow: 1; line-height: 1.75; }
-        .read-more { margin-top: auto; color: #0f5132; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; border: 1px solid rgba(22, 163, 74, 0.28); border-radius: 10px; padding: 10px 14px; background: #f4fff8; transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
-        .single-service:hover .read-more { background: #16a34a; color: #ffffff; border-color: #16a34a; }
-        .read-more :global(svg) { transition: transform 0.2s ease; }
-        .single-service:hover .read-more :global(svg) { transform: translateX(4px); }
-        .single-service-large { background: linear-gradient(180deg, #ffffff 0%, #f8fff9 100%); padding: 54px 44px; border-radius: 18px; height: 100%; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 14px 30px rgba(15,23,42,0.1); border-top: 5px solid #16a34a; text-align: center; }
-        .single-service-large h3 { font-size: 34px; color: #111827; font-weight: 800; margin-bottom: 18px; letter-spacing: -0.02em; }
-        .single-service-large h3 span { color: #16a34a; }
-        .single-service-large p { color: #4b5563; margin-bottom: 30px; font-size: 16px; line-height: 1.8; }
-        .l-btn { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; padding: 16px 40px; border-radius: 999px; font-weight: 800; text-decoration: none; display: inline-block; width: fit-content; margin: 0 auto; transition: transform 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 14px 24px rgba(22,163,74,0.32); }
-        .l-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 30px rgba(22,163,74,0.4); color: #fff; }
+        .service-area::before {
+          content: "";
+          position: absolute; inset: 0;
+          background:
+            radial-gradient(ellipse 60% 50% at 15% 30%, rgba(22,163,74,0.12), transparent),
+            radial-gradient(ellipse 50% 40% at 85% 70%, rgba(22,163,74,0.08), transparent);
+          pointer-events: none;
+        }
+
+        /* ── Section header ─────────────────────── */
+        .section-title { margin-bottom: 72px; text-align: center; position: relative; z-index: 2; }
+        .section-pill {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: rgba(22,163,74,0.15); border: 1px solid rgba(22,163,74,0.35);
+          color: #4ade80; font-size: 11.5px; font-weight: 800; letter-spacing: 0.16em;
+          text-transform: uppercase; border-radius: 999px; padding: 7px 20px;
+          margin-bottom: 22px;
+        }
+        .section-pill::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 6px #4ade80; }
+        .section-title h2 { font-size: 44px; font-weight: 900; color: #f8fafc; margin-bottom: 18px; letter-spacing: -0.035em; line-height: 1.16; }
+        .section-title h2 em { font-style: normal; color: #4ade80; }
+        .section-title p { max-width: 640px; margin: 0 auto; color: rgba(255,255,255,0.58); line-height: 1.85; font-size: 16px; }
+        .title-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 26px auto 0; max-width: 220px; }
+        .title-divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(74,222,128,0.4)); }
+        .title-divider-line-r { flex: 1; height: 1px; background: linear-gradient(270deg, transparent, rgba(74,222,128,0.4)); }
+        .title-divider-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; flex-shrink: 0; box-shadow: 0 0 8px #4ade80; }
+
+        /* ── Bento grid ───────────────────────────── */
+        .svc-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: auto auto;
+          gap: 20px;
+          position: relative; z-index: 2;
+        }
+        .svc-card { border-radius: 20px; overflow: hidden; position: relative; }
+        .svc-card:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+        .svc-card:nth-child(4) { grid-column: span 2; grid-row: span 1; }
+        .svc-inner { position: relative; width: 100%; height: 380px; overflow: hidden; border-radius: 20px; cursor: pointer; }
+        .svc-card:nth-child(1) .svc-inner,
+        .svc-card:nth-child(4) .svc-inner { height: 380px; }
+        .svc-img { object-fit: cover; transition: transform 0.65s cubic-bezier(0.22,1,0.36,1) !important; }
+        .svc-card:hover .svc-img { transform: scale(1.07) !important; }
+        .svc-gradient {
+          position: absolute; inset: 0; z-index: 1;
+          background: linear-gradient(180deg,
+            rgba(0,0,0,0.05) 0%,
+            rgba(0,0,0,0.15) 35%,
+            rgba(5,30,15,0.82) 100%);
+          transition: opacity 0.35s ease;
+        }
+        .svc-card:hover .svc-gradient { opacity: 0.95; }
+        .svc-num {
+          position: absolute; top: 20px; right: 22px; z-index: 3;
+          font-size: 72px; font-weight: 900; line-height: 1;
+          color: rgba(255,255,255,0.07); letter-spacing: -0.04em;
+          pointer-events: none; user-select: none;
+          transition: color 0.35s ease;
+        }
+        .svc-card:hover .svc-num { color: rgba(74,222,128,0.12); }
+        .svc-badge {
+          position: absolute; top: 18px; left: 18px; z-index: 4;
+          padding: 5px 12px; border-radius: 999px; font-size: 10.5px; font-weight: 800;
+          letter-spacing: 0.09em; text-transform: uppercase;
+          color: #f0fdf4; background: rgba(22,163,74,0.7);
+          border: 1px solid rgba(74,222,128,0.35); backdrop-filter: blur(6px);
+        }
+        .svc-content {
+          position: absolute; bottom: 0; left: 0; right: 0; z-index: 4;
+          padding: 28px 28px 26px;
+          transform: translateY(8px);
+          transition: transform 0.38s cubic-bezier(0.22,1,0.36,1);
+        }
+        .svc-card:hover .svc-content { transform: translateY(0); }
+        .svc-title { font-size: 24px; font-weight: 900; color: #ffffff; margin: 0 0 8px; letter-spacing: -0.025em; line-height: 1.2; }
+        .svc-desc {
+          color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.72;
+          margin: 0 0 18px;
+          max-height: 0; overflow: hidden;
+          transition: max-height 0.42s cubic-bezier(0.22,1,0.36,1), margin 0.3s ease, opacity 0.35s ease;
+          opacity: 0;
+        }
+        .svc-card:hover .svc-desc { max-height: 120px; opacity: 1; }
+        .svc-link:hover { background: rgba(22,163,74,0.8) !important; border-color: rgba(74,222,128,0.6) !important; }
+
+        /* ── CTA banner ──────────────────────────── */
+        .cta-banner {
+          position: relative; overflow: hidden; margin-top: 64px; z-index: 2;
+          background: linear-gradient(130deg, #052e16 0%, #14532d 50%, #166534 100%);
+          border-radius: 24px; padding: 58px 56px;
+          display: flex; align-items: center; justify-content: space-between; gap: 36px;
+          border: 1px solid rgba(74,222,128,0.15);
+          box-shadow: 0 24px 56px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .cta-banner::before {
+          content: ""; position: absolute;
+          width: 580px; height: 580px; border-radius: 50%;
+          background: rgba(255,255,255,0.03);
+          top: -260px; right: -80px; pointer-events: none;
+        }
+        .cta-banner::after {
+          content: ""; position: absolute;
+          width: 350px; height: 350px; border-radius: 50%;
+          background: rgba(74,222,128,0.05);
+          bottom: -170px; left: -40px; pointer-events: none;
+        }
+        .cta-banner-text { position: relative; z-index: 2; }
+        .cta-banner-eyebrow { color: rgba(255,255,255,0.55); font-size: 11.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 12px; }
+        .cta-banner-text h3 { font-size: 36px; font-weight: 900; color: #ffffff; margin: 0; letter-spacing: -0.025em; line-height: 1.2; }
+        .cta-banner-text h3 span { color: #86efac; }
+        .cta-banner-actions { position: relative; z-index: 2; display: flex; gap: 14px; flex-wrap: wrap; flex-shrink: 0; align-items: center; }
         .mb-30 { margin-bottom: 30px; }
+        @media (max-width: 1200px) {
+          .svc-grid { grid-template-columns: repeat(2, 1fr); }
+          .svc-card:nth-child(1),
+          .svc-card:nth-child(4) { grid-column: span 1; }
+        }
         @media (max-width: 991px) {
           .service-area { padding: 86px 0; }
           .section-title { margin-bottom: 54px; }
           .section-title h2 { font-size: 34px; }
-          .single-service-large { padding: 42px 28px; }
-          .single-service-large h3 { font-size: 30px; }
+          .svc-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+          .svc-card:nth-child(1) { grid-column: span 2; }
+          .svc-card:nth-child(4) { grid-column: span 1; }
+          .cta-banner { flex-direction: column; padding: 46px 32px; text-align: center; }
+          .cta-banner-text h3 { font-size: 28px; }
+          .cta-banner-actions { justify-content: center; }
         }
         @media (max-width: 575px) {
           .service-area { padding: 74px 0; }
-          .section-title h2 { font-size: 30px; line-height: 1.2; }
-          .single-service { padding: 18px; }
-          .service-media { margin: -18px -18px 16px; height: 170px; }
-          .single-service h3 { font-size: 20px; }
-          .single-service-large { padding: 34px 20px; }
-          .single-service-large h3 { font-size: 26px; }
-          .l-btn { width: 100%; text-align: center; }
+          .section-title h2 { font-size: 28px; line-height: 1.2; }
+          .svc-grid { grid-template-columns: 1fr; gap: 14px; }
+          .svc-card:nth-child(1),
+          .svc-card:nth-child(4) { grid-column: span 1; }
+          .svc-inner { height: 300px !important; }
+          .svc-desc { max-height: 100px !important; opacity: 1 !important; }
+          .svc-content { transform: translateY(0) !important; }
+          .cta-banner { padding: 38px 22px; }
+          .cta-banner-text h3 { font-size: 24px; }
         }
       `}</style>
 
@@ -419,19 +535,23 @@ const Service = () => {
           <div className="row">
             <div className="col-xl-12">
               <div className="section-title">
-                <span>Our Premium Offerings</span>
-                {/* ✅ SEO: Upgraded H2 to act as the location anchor for all the cards below it */}
-                <h2 id="premium-offerings-heading">Top-Rated Landscaping, Hardscaping & Tree Services in Reading, PA</h2>
-                <p>
-                  With years of hands-on experience and proven expertise, we deliver exceptional landscaping, hardscaping, home remodelling, and tree care services for residential and commercial properties. Our goal is to exceed expectations through reliable scheduling, clean workmanship, and long-term value.
-                </p>
+                <div className="section-pill">Our Premium Offerings</div>
+                <h2 id="premium-offerings-heading">
+                  Top-Rated Landscaping, Hardscaping<br />&amp; <em>Tree Services</em> in Reading, PA
+                </h2>
+                <p>With years of hands-on experience we deliver exceptional landscaping, hardscaping, home remodelling, and tree care for residential and commercial properties — reliable scheduling, clean workmanship, and long-term value.</p>
+                <div className="title-divider">
+                  <span className="title-divider-line" />
+                  <span className="title-divider-dot" />
+                  <span className="title-divider-line-r" />
+                </div>
               </div>
             </div>
           </div>
           
-          {/* ROW 1: The Service Cards */}
-          <div className="row" role="list" aria-label="Premium landscaping and property services">
-            {ServiceData.map((data) => (
+          {/* Bento Grid: Card 1 (double-wide), 2, 3, Card 4 (double-wide), 5 */}
+          <div className="svc-grid" role="list" aria-label="Premium landscaping and property services">
+            {ServiceData.map((data, i) => (
               <ServiceItem
                 key={data.id}
                 img={data.img}
@@ -439,26 +559,55 @@ const Service = () => {
                 description={data.description}
                 serviceLink={data.serviceLink}
                 primary={data.primary}
+                num={String(i + 1).padStart(2, "0")}
               />
             ))}
           </div>
           
-          {/* ROW 2: The Large Centered Box (New Row) */}
-          <div className="row justify-content-center mt-4">
-            <div className="col-xl-8 col-lg-10 col-md-12 mb-30">
-              <div className="single-service-large">
-                <h3>
-                  Comprehensive Property Care <br />
-                  <span>You Can Trust</span>
-                </h3>
-                <p>
-                  Rolax Landscaping provides high-quality outdoor solutions for residential and commercial properties. From lush lawn care and vibrant mulch installation to durable hardscaping and rapid-response snow plowing, our experienced team delivers reliable results with unmatched attention to detail.
-                </p>
-                {/* ✅ UX/SEO: Stronger Action Verb CTA */}
-                <Link href="/contact" className="l-btn">
-                  Get Your Free Estimate
-                </Link>
-              </div>
+          {/* CTA Banner */}
+          <div className="cta-banner">
+            <div className="cta-banner-text">
+              <p className="cta-banner-eyebrow">Serving Reading, PA &amp; 26+ Surrounding Communities</p>
+              <h3>Comprehensive Property Care<br /><span>You Can Trust</span></h3>
+            </div>
+            <div className="cta-banner-actions">
+              <Link
+                href="/contact"
+                style={{
+                  background: "#ffffff",
+                  color: "#052e16",
+                  padding: "16px 38px",
+                  borderRadius: "14px",
+                  fontWeight: 800,
+                  fontSize: "15px",
+                  textDecoration: "none",
+                  display: "inline-block",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+                  transition: "all 0.28s ease",
+                  letterSpacing: "-0.01em",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Get Your Free Estimate
+              </Link>
+              <Link
+                href="/services"
+                style={{
+                  background: "rgba(255,255,255,0.1)",
+                  color: "#ffffff",
+                  padding: "16px 38px",
+                  borderRadius: "14px",
+                  fontWeight: 800,
+                  fontSize: "15px",
+                  textDecoration: "none",
+                  display: "inline-block",
+                  border: "1.5px solid rgba(255,255,255,0.28)",
+                  transition: "all 0.28s ease",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                View All Services
+              </Link>
             </div>
           </div>
 

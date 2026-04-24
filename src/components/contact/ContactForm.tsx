@@ -728,7 +728,7 @@ const ContactForm = () => {
                   <label htmlFor="phone" className="rlx-label">
                     Phone <span className="rlx-star" aria-hidden="true">*</span>
                   </label>
-                  <PhoneInput inputProps={{ id: 'phone', required: true }} country={"ca"} value={form.phone} onChange={onPhoneChange} enableSearch={true} disableSearchIcon={false} />
+                  <PhoneInput inputProps={{ id: 'phone', required: true }} country={"us"} value={form.phone} onChange={onPhoneChange} enableSearch={true} disableSearchIcon={false} />
 
                   <label htmlFor="email" className="rlx-label">
                     Email <span className="rlx-star" aria-hidden="true">*</span>

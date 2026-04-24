@@ -414,7 +414,7 @@ const Hero = () => {
 
                 <div className="rlx-field">
                   <div className="rlx-label">Phone <span className="rlx-star">*</span></div>
-                  <PhoneInput country={'ca'} value={form.phone} onChange={onPhoneChange} enableSearch={true} disableSearchIcon={false} />
+                  <PhoneInput country={'us'} value={form.phone} onChange={onPhoneChange} enableSearch={true} disableSearchIcon={false} />
                 </div>
 
                 <div className="rlx-field">
