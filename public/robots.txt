@@ -1,0 +1,6 @@
+# Tell all search engine bots they are allowed to crawl the site
+User-agent: *
+Allow: /
+
+# Point the bots directly to your sitemap
+Sitemap: https://rolaxlandscapingcanada.com/sitemap.xml
